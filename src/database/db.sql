@@ -1,0 +1,23 @@
+CREATE DATABASE IF NOT EXISTS flask_login14;
+
+USE flask_login14;
+
+CREATE TABLE IF NOT EXISTS users(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(150) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    rol VARCHAR(250) DEFAULT('user')
+);
+
+CREATE TABLE IF NOT EXISTS favorites(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_user INT NOT NULL,
+    name VARCHAR(150) NOT NULL,
+    gender VARCHAR(150) NOT NULL,
+    image VARCHAR(255) NOT NULL,
+
+    Foreign Key (id_user) REFERENCES users(id)
+
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+);

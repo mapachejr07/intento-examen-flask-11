@@ -11,7 +11,29 @@
     <div>
         <a href=" {{ url_for('inicio') }}">Inicio</a>
         <a href=" {{ url_for('about') }}">About</a>
+
+        {% if session['token'] %}
+
+            <a href=" {{ url_for('do_dashboard') }}">Favoritos</a>
+            <a href=" {{ url_for('do_logout') }}">Cerrar Sesión</a>
+
+        {% else %}
+
+            <a href=" {{ url_for('do_register') }}">Register</a>
+            <a href=" {{ url_for('do_login') }}">Login</a>
+        
+        {% endif %}
     </div>
+
+
+    {% with messages = get_flashed_messages()  %}
+        {% if messages %}
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+        
+    {% endwith %}
     {% block body %}
         
     {% endblock %}
