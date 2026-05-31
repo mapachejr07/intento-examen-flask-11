@@ -93,6 +93,7 @@ def register():
             query2 = 'INSERT INTO users(email,password) VALUES(%s,%s)'
 
         cursor.execute(query2, (email,password_hash))
+        conexion.connection.commit()
 
         query3 = 'SELECT * FROM users WHERE email = %s'
         cursor.execute(query3,(email, ))
@@ -241,6 +242,10 @@ def do_logout():
 ####### ADMIN #########
 @app.route('/admin')
 def do_admin():
+    if not session.get('token'):
+        flash('No puedes acceder a esta zona, no tienes una cuenta')
+        return redirect(url_for('do_register'))
+
     if session['rol'] != 'admin':
         flash('No tienes acceso a esta zona, chaval que haces')
         return redirect(url_for('do_dashboard'))
